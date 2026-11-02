@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1724">
+  <meta name="description" content="A birthday greeting from everyone at Allerton Detachment.">
+  <title>Happy Birthday, Ma’am | Allerton Detachment</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --navy: #0b1724;
+      --navy-deep: #07111b;
+      --ivory: #f5f2ea;
+      --gold: #d5bd86;
+      --gold-soft: #eadbb8;
+      --muted: #c8cbd0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+
+    body {
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 2.5vh 2.5vw;
+      color: var(--ivory);
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(74, 101, 115, .23) 0%, rgba(23, 43, 58, .12) 34%, transparent 68%),
+        linear-gradient(145deg, #0b1a29 0%, #102335 48%, #091522 100%);
+      font-family: "Segoe UI", Aptos, Arial, sans-serif;
+    }
+
+    /* A quiet, slow ambient glow adds depth without competing with the message. */
+    .atmosphere {
+      position: fixed;
+      inset: -35%;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 48% 48%, rgba(213, 189, 134, .055), transparent 43%);
+      animation: atmosphere-drift 32s ease-in-out infinite alternate;
+    }
+
+    .stage {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      place-items: center;
+      width: min(95vw, 168vh, 1680px);
+      aspect-ratio: 16 / 9;
+      max-height: 94svh;
+      padding: clamp(34px, 6vw, 100px);
+      text-align: center;
+    }
+
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(213, 189, 134, .35);
+      pointer-events: none;
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(245, 242, 234, .075);
+      pointer-events: none;
+    }
+
+    .corner {
+      position: absolute;
+      z-index: 2;
+      width: clamp(20px, 2.2vw, 34px);
+      height: clamp(20px, 2.2vw, 34px);
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: .78;
+      pointer-events: none;
+    }
+    .corner.tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
+    .corner.tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+    .corner.bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+    .corner.br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: arrive 1.15s cubic-bezier(.2, .75, .25, 1) both;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(12px, 1.5vw, 24px);
+      margin: 0 0 clamp(30px, 5.1vh, 58px);
+      color: var(--gold);
+      font-size: clamp(12px, 1.15vw, 18px);
+      font-weight: 600;
+      letter-spacing: .34em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: clamp(34px, 5.2vw, 82px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(213, 189, 134, .8));
+    }
+    .eyebrow::after { transform: scaleX(-1); }
+
+    h1 {
+      margin: 0;
+      color: var(--ivory);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(58px, 8.1vw, 138px);
+      font-weight: 400;
+      letter-spacing: -.035em;
+      line-height: .99;
+      text-wrap: balance;
+      text-shadow: 0 8px 42px rgba(0, 0, 0, .22);
+    }
+
+    .salutation {
+      display: block;
+      margin-top: .19em;
+      color: var(--gold-soft);
+      font-size: .73em;
+      font-style: italic;
+      letter-spacing: .015em;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      width: clamp(130px, 18vw, 260px);
+      margin: clamp(28px, 4.7vh, 55px) 0 clamp(22px, 3.5vh, 40px);
+      opacity: .9;
+    }
+    .ornament::before,
+    .ornament::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(213, 189, 134, .9));
+    }
+    .ornament::after { transform: scaleX(-1); }
+    .ornament span {
+      width: 7px;
+      height: 7px;
+      border: 1px solid var(--gold-soft);
+      transform: rotate(45deg);
+    }
+
+    .message {
+      max-width: 920px;
+      margin: 0;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(19px, 2.05vw, 31px);
+      font-weight: 400;
+      line-height: 1.5;
+      text-wrap: balance;
+    }
+
+    .signoff {
+      margin: clamp(28px, 4.5vh, 52px) 0 0;
+      color: var(--gold);
+      font-size: clamp(11px, 1.12vw, 17px);
+      font-weight: 600;
+      letter-spacing: .22em;
+      line-height: 1.6;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes atmosphere-drift {
+      from { transform: translate3d(-1.2%, -.5%, 0) scale(1); }
+      to { transform: translate3d(1.2%, .8%, 0) scale(1.06); }
+    }
+
+    @media (max-aspect-ratio: 5 / 4) {
+      body { padding: 3vw; }
+      .stage { width: 94vw; aspect-ratio: auto; min-height: 76svh; max-height: 94svh; padding: 56px 30px; }
+      .eyebrow { margin-bottom: 5vh; }
+      h1 { font-size: clamp(54px, 11vw, 100px); }
+      .message { font-size: clamp(18px, 3vw, 27px); }
+      .signoff { font-size: clamp(10px, 1.8vw, 15px); }
+    }
+
+    @media (max-width: 600px) {
+      .stage { min-height: 80svh; padding: 42px 22px; }
+      .stage::after { inset: 8px; }
+      .eyebrow { gap: 9px; letter-spacing: .2em; }
+      .eyebrow::before, .eyebrow::after { width: 22px; }
+      h1 { font-size: clamp(47px, 12vw, 72px); }
+      .message { font-size: 18px; }
+      .signoff { letter-spacing: .14em; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <main class="stage" aria-label="Birthday greeting from everyone at Allerton Detachment">
+    <i class="corner tl" aria-hidden="true"></i>
+    <i class="corner tr" aria-hidden="true"></i>
+    <i class="corner bl" aria-hidden="true"></i>
+    <i class="corner br" aria-hidden="true"></i>
+
+    <section class="content">
+      <p class="eyebrow">Allerton Detachment</p>
+      <h1>
+        Happy Birthday
+        <span class="salutation">Ma’am</span>
+      </h1>
+      <div class="ornament" aria-hidden="true"><span></span></div>
+      <p class="message">Thank you for the time, commitment and care you give to our detachment. Wishing you a truly wonderful day.</p>
+      <p class="signoff">With best wishes from everyone at Allerton Detachment</p>
+    </section>
+  </main>
+</body>
+</html>
